@@ -1,0 +1,5 @@
+.git/*
+.git-ftp-ignore
+.git-ftp-include
+.gitignore
+bitbucket-pipelines.yml

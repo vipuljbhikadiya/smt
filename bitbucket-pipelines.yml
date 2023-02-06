@@ -1,0 +1,46 @@
+pipelines:
+  custom:
+    init-staging:
+    - step:
+        image: node:16
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - apt-get update
+          - apt-get -qq install git-ftp
+          - git ftp init --insecure --user=$STAGING_USER --passwd=$STAGING_PASSWORD $STAGING_PATH
+    deploy-staging:
+    - step:
+        image: node:16
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - apt-get update
+          - apt-get -qq install git-ftp
+          - git ftp push --insecure --user=$STAGING_USER --passwd=$STAGING_PASSWORD $STAGING_PATH
+    init-live:
+    - step:
+        image: node:16
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - apt-get update
+          - apt-get -qq install git-ftp
+          - git ftp init --insecure --user=$LIVE_USER --passwd=$LIVE_PASSWORD $LIVE_PATH
+    deploy-live:
+    - step:
+        image: node:16
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - apt-get update
+          - apt-get -qq install git-ftp
+          - git ftp push --insecure --user=$LIVE_USER --passwd=$LIVE_PASSWORD $LIVE_PATH
